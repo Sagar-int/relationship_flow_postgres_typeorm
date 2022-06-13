@@ -4,10 +4,13 @@ import controller from "../controllers/Client.controller";
 const router = express.Router();
 
 //Creating Client
-router.post("/clients", controller.createClient);
+router.post("/client", controller.createClient);
 
-//Creating Client
+//Geting all Clients
 router.get("/clients", controller.getClients);
+
+//Deleting Client
+router.delete("/client/:id", controller.deleteClient);
 
 
 export default router;   

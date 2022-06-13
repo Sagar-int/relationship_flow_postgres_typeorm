@@ -25,6 +25,17 @@ const getClients = async (req:Request, res:Response, Next:NextFunction) => {
     })
 }
 
+//Deleteing client
+const deleteClient = async (req:Request, res:Response, Next:NextFunction) => {
+    const clientRepository = AppDataSource.getRepository(Client);
+    const client = await clientRepository.findOneBy({id: parseInt(req.params.id)});
+    await clientRepository.remove(client)
+    
+    return res.send({
+        msg:"clients deleted Successfully",
+    })
+}
 
 
-export default { createClient, getClients };
+
+export default { createClient, getClients, deleteClient };

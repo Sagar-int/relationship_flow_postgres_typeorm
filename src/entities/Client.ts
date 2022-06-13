@@ -30,7 +30,9 @@ export class Client extends CommonEntity{
     @OneToMany(() => Transaction, (transaction) => transaction.client) // note: we will create client property in the Transaction class below
     transaction: Transaction[]
 
-    @ManyToMany(() => Banker, (banker) => banker.client)
+    @ManyToMany(() => Banker, 
+    (banker) => banker.client
+    )
     banker: Banker[]
 
     @Column()

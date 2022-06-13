@@ -11,7 +11,12 @@ export class Banker extends CommonEntity {
     })
     employee_number!: string
 
-    @ManyToMany(() => Client, (client) => client.banker)
+    @ManyToMany(() => Client, 
+    (client) => client.banker,
+    {
+        cascade:false
+    }
+    )
     @JoinTable({
         name:'bankers_clients'
     })

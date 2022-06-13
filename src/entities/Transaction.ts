@@ -23,7 +23,12 @@ export class Transaction {
     })
     amount!:number
 
-    @ManyToOne(() => Client, (client) => client.transaction)
+    @ManyToOne(() => Client, 
+    (client) => client.transaction,
+    {  
+        onDelete:"CASCADE"
+    }
+    )
     client: Client
 
     @Column()

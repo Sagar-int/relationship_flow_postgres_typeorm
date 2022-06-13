@@ -2,38 +2,43 @@ import { Request, Response, NextFunction } from "express";
 import { AppDataSource } from "../data-source";
 import { Banker } from "../entities/Banker";
 
-//Creting a client
+//Creting a banker
 const createBanker = async (req:Request, res:Response, Next:NextFunction) => {
-    const clientRepository = AppDataSource.getRepository(Banker);
+   try {
+    const bankerRepository = AppDataSource.getRepository(Banker);
 
-    const banker = await clientRepository.save(req.body)
+    const banker = await bankerRepository.save(req.body)
     return res.send({
         msg:"Banker created successfuly",
-        client:banker
+        banker:banker
     })
+   } catch (error) {
+       console.log(error);
+   }
 }
 
 
-//Getting all clients
+//Getting all bankers
 const getBankers = async (req:Request, res:Response, Next:NextFunction) => {
-    const clientRepository = AppDataSource.getRepository(Banker);
+    const bankerRepository = AppDataSource.getRepository(Banker);
 
-    const bankers = await clientRepository.find()
+    const bankers = await bankerRepository.find()
     return res.send({
         msg:"All Bankers",
-        client:bankers
+        banker:bankers
     })
 }
 
-// //Deleteing Banker
-// const deleteBanker = async (req:Request, res:Response, Next:NextFunction) => {
-//     const clientRepository = AppDataSource.getRepository(Banker);
-//     let banker_id = req.params.id as string;
-//     const bankers = await clientRepository.findOne(banker_id);
-//     return res.send({
-//         msg:"Bankers deleted Successfully",
-//     })
-// }
+//Deleteing Banker
+const deleteBanker = async (req:Request, res:Response, Next:NextFunction) => {
+    const bankerRepository = AppDataSource.getRepository(Banker);
+    const banker = await bankerRepository.findOneBy({id: parseInt(req.params.id)});
+    await bankerRepository.remove(banker)
+    
+    return res.send({
+        msg:"banker deleted Successfully",
+    })
+}
 
 
-export default { createBanker, getBankers };
+export default { createBanker, getBankers, deleteBanker };
